@@ -5,10 +5,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.6.10"
     id("org.jetbrains.compose") version "1.1.0"
+    id("com.github.gmazzo.buildconfig") version "3.0.3"
 }
 
 group = "com.gee12"
 version = "1.2.0"
+
+buildConfig {
+    buildConfigField("String", "APP_NAME", "\"${project.name}\"")
+    buildConfigField("String", "APP_VERSION", provider { "\"${project.version}\"" })
+}
 
 repositories {
     google()

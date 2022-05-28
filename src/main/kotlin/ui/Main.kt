@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import com.gee__.TeraBoy_Mytetra.BuildConfig
 
 @Composable
 @Preview
@@ -21,7 +22,7 @@ fun App(window: ComposeWindow) {
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "Data converter: TomBoy to MyTetra",
+        title = "Data converter: TomBoy to MyTetra (${BuildConfig.APP_VERSION})",
         icon = painterResource("icon.png"),
         state = WindowState(size = DpSize(640.dp, 480.dp))
     ) {
