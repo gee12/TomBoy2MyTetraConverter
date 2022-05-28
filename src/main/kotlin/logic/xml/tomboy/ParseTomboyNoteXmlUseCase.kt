@@ -13,7 +13,7 @@ import java.io.Writer
 
 
 private val NS: Namespace = Namespace.getNamespace("http://beatniksoftware.com/tomboy")
-private  const val DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS" // ISO_8601_24H_FULL_FORMAT
+private  const val DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss" // ISO_8601_24H_FULL_FORMAT
 
 class ParseTomboyNoteXmlUseCase
     : UseCase<TomboyNote, ParseTomboyNoteXmlUseCase.Params>() {

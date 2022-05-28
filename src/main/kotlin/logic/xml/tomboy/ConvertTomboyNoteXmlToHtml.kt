@@ -1,9 +1,6 @@
 package logic.xml.tomboy
 
-import common.Either
-import common.Failure
-import common.UseCase
-import common.toRight
+import common.*
 
 
 class ConvertTomboyNoteXmlToHtml
@@ -21,20 +18,25 @@ class ConvertTomboyNoteXmlToHtml
         result = result.replace("\n", "<BR/>")
 
         // links
-        result = result.replace("<link:internal>(.+?)</link:internal>".toRegex()) { "${it.groups[1]?.value}" }
-        result = result.replace("<link:broken>(.+?)</link:broken>".toRegex()) { "${it.groups[1]?.value}" }
+        result = result.replace("<link:internal>(.+?)</link:internal>".toRegex()) {
+            "<a href=\"${Constants.TEMP_INTERNAL_LINK}\">${it.groups[1]?.value}</a>"
+        }
+        result = result.replace("<link:broken>(.+?)</link:broken>".toRegex()) {
+            "${it.groups[1]?.value}"
+        }
 
         "(<link:url>(.+?)</link:url>)".toRegex().findAll(result).toList().forEach { match ->
             result = if ("^([a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+.)+[a-zA-Z]{2,10}|https?://.+)$".toRegex().matches(match.groups[2]?.value.orEmpty())) {
-                result.replace(match.groups[1]?.value.orEmpty(), "<a href=\"${match.groups[2]}\">${match.groups[2]}</a>")
+                result.replace(match.groups[1]?.value.orEmpty(), "<a href=\"${match.groups[2]?.value}\">${match.groups[2]?.value}</a>")
             } else {
                 result.replace(match.groups[1]?.value.orEmpty(), match.groups[2]?.value.orEmpty())
             }
         }
 
         // lists
-        result = result.replace("<BR/><list>", "<list>") // redundant indent before list
-        result = result.replace("</list><BR/>", "</list>") // redundant indent after list
+        result = result.replace("<BR/><list>", "\n<list>") // redundant indent before list
+        result = result.replace("</list><BR/>", "</list>\n") // redundant indent after list
+        result = result.replace("<BR/></list-item>", "\n</list-item>") // redundant indent before </list-item>
         result = result.replace("</list>(<BR/>)?<list>".toRegex()) { "\n" } // redundant start new list
         result = result.replace("<(/?)list>".toRegex()) { "<${it.groups[1]?.value}ul>" }
         result = result.replace("<list-item dir=\"ltr\">", "<li>")
