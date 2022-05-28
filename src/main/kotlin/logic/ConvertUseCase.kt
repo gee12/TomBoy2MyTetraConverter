@@ -4,6 +4,7 @@ import common.*
 import logic.xml.mytetra.SaveMytetraRecordsUseCase
 import logic.xml.mytetra.SaveMytetraXmlUseCase
 import logic.xml.tomboy.ParseTomboyNotesUseCase
+import model.mytetra.MytetraNode
 import java.io.File
 
 class ConvertUseCase: UseCase<ConvertUseCase.Result, ConvertUseCase.Params>() {
@@ -14,7 +15,8 @@ class ConvertUseCase: UseCase<ConvertUseCase.Result, ConvertUseCase.Params>() {
     )
 
     data class Result(
-        val failures: List<Failure> = emptyList(),
+        val mytetraNodes: List<MytetraNode>,
+        val failures: List<Failure> = emptyList()
     )
 
     private val parseTomboyNotesUseCase = ParseTomboyNotesUseCase()
@@ -54,6 +56,7 @@ class ConvertUseCase: UseCase<ConvertUseCase.Result, ConvertUseCase.Params>() {
                         )
                     ).flatMap {
                         Result(
+                            mytetraNodes = mytetraNodes,
                             failures = failures
                         ).toRight()
                     }

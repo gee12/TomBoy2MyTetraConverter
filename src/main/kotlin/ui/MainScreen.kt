@@ -1,13 +1,12 @@
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposeWindow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
@@ -28,22 +27,17 @@ fun MainScreen(window: ComposeWindow) {
     var mytetraFolder by remember { mutableStateOf(System.getProperty("compose.application.resources.dir")) }
     val coroutineScope = rememberCoroutineScope()
 
-    Column {
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 32.dp, vertical = 16.dp)
+            .verticalScroll(state = rememberScrollState()),
+    ) {
 
         // tomboy
-        Row(
-            modifier = Modifier
-                .padding(start = 16.dp, top = 16.dp)
-        ) {
-            Text(
-                modifier = Modifier.align(alignment = Alignment.CenterVertically),
-                text = "TomBoy data files"
-            )
-
+        Row {
             Button(
-                modifier = Modifier
-                    .padding(start = 16.dp),
-                content = { Text("select") },
+                modifier = Modifier,
+                content = { Text("Select TomBoy data files") },
                 onClick = {
                     Utils.pickFiles(
                         window = window,
@@ -55,51 +49,45 @@ fun MainScreen(window: ComposeWindow) {
                     }
                 }
             )
+
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 16.dp),
+                text = "Count: ${tomboyFiles.size}",
+                style = TextStyle(
+                    fontStyle = FontStyle.Italic
+                )
+            )
+
         }
 
-        Text(
-            modifier = Modifier
-                .padding(start = 16.dp),
-            text = "Count: ${tomboyFiles.size}",
-            style = TextStyle(
-                fontStyle = FontStyle.Italic
-            )
-        )
+        Spacer(modifier = Modifier.padding(vertical = 12.dp))
 
         // mytetra
-        Row(
-            modifier = Modifier
-                .padding(start = 16.dp, top = 16.dp)
-        ) {
-            Text(
-                modifier = Modifier.align(alignment = Alignment.CenterVertically),
-                text = "MyTetra data folder"
-            )
+        TextField(
+            modifier = Modifier,
+            label = { Text(text = "Enter MyTetra data folder:") },
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.White
+            ),
+            trailingIcon = {
+                Image(
+                    modifier = Modifier
+                        .size(16.dp),
+                    painter = painterResource("pencil_32.png"),
+                    contentDescription = null,
+                )
+            },
+            value = mytetraFolder.orEmpty(),
+            onValueChange = { mytetraFolder = it }
+        )
 
-//            Button(
-//                content = { Text("select") },
-//                onClick = {
-//                    Utils.pickFolder(
-//                        window = window,
-//                        title = "Select MyTetra data folder",
-//                        folder = mytetraFolder.absolutePath.orEmpty()
-//                    )?.let {
-//                        mytetraFolder = it
-//                    }
-//                }
-//            )
-            TextField(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                value = mytetraFolder.orEmpty(),
-                onValueChange = { mytetraFolder = it }
-            )
-        }
+        Spacer(modifier = Modifier.padding(vertical = 12.dp))
 
         // convert
         Button(
-            modifier = Modifier
-                .padding(16.dp),
+            modifier = Modifier,
             content = { Text("convert") },
             enabled = tomboyFiles.isNotEmpty() && mytetraFolder.isNotEmpty(),
             onClick = {
@@ -114,10 +102,12 @@ fun MainScreen(window: ComposeWindow) {
             }
         )
 
+        Spacer(modifier = Modifier.padding(vertical = 12.dp))
+
+        // result
         result?.let {
             Text(
-                modifier = Modifier
-                    .padding(start = 16.dp),
+                modifier = Modifier,
                 text = getResultText(it),
                 style = TextStyle(
                     fontStyle = FontStyle.Italic
@@ -132,6 +122,11 @@ private fun getResultText(result: Either<Failure, ConvertUseCase.Result>): Strin
     return result.map {
         StringBuilder().apply {
             appendLine("Converted successfully")
+            if (it.mytetraNodes.isNotEmpty()) {
+                appendLine()
+                appendLine("MyTetra nodes: ${it.mytetraNodes.size}")
+                appendLine("MyTetra records: ${it.mytetraNodes.map { it.records }.sumOf { it.size }}")
+            }
             if (it.failures.isNotEmpty()) {
                 appendLine()
                 appendLine("Also has errors:")
