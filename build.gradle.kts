@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.gee12"
-version = "1.1"
+version = "1.2.0"
 
 repositories {
     google()
@@ -32,8 +32,8 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Tomboy2Mytetra"
-            packageVersion = "1.1.0"
-            version = "1.1.0"
+            packageVersion = "1.2.0"
+            version = "1.2.0"
             description = "Tomboy to Mytetra data converter"
             copyright = "©2022 gee12"
             vendor = "gee12"
