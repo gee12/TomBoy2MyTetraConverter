@@ -36,7 +36,7 @@ compose.desktop {
     application {
         mainClass = "MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Exe, TargetFormat.Deb)
             packageName = "Tomboy2Mytetra"
             packageVersion = "1.2.0"
             version = "1.2.0"
@@ -45,6 +45,14 @@ compose.desktop {
             vendor = "gee12"
             windows {
                 iconFile.set(project.file("icon.ico"))
+                dirChooser = true
+                menuGroup = "Tomboy2Mytetra"
+                shortcut = true
+            }
+            linux {
+                iconFile.set(project.file("icon.ico"))
+                packageName = "teraboy2mytetra"
+                shortcut = true
             }
         }
     }
