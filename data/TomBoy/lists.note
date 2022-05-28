@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<note version="0.3" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size" xmlns="http://beatniksoftware.com/tomboy"><title>Списки</title><text xml:space="preserve"><note-content version="0.1" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size">Списки
+
+<bold><highlight>Навигация по директориям<italic>:</italic></highlight></bold>
+<list><list-item dir="ltr"><bold>cd <italic>/dir</italic></bold> # перейти в директорию <italic>/dir</italic>
+</list-item><list-item dir="ltr"><bold>cd ..</bold> # перейти в директорию уровнем выше
+</list-item><list-item dir="ltr"><bold>cd ../..</bold> # перейти в директорию двумя уровнями выше
+</list-item><list-item dir="ltr"><bold>cd</bold>  # перейти в свою домашнюю директорию
+</list-item><list-item dir="ltr"><bold>cd ~<italic>USER</italic></bold> # перейти в домашнюю директорию пользователя <italic>USER</italic>
+</list-item><list-item dir="ltr"><bold>cd -</bold> # перейти в директорию, в которой находились до этого
+</list-item><list-item dir="ltr"><bold>cd <link:url>/home**/somen*</link:url></bold><link:url>([1])</link:url> # для zsh, перейти в директорию по неполному имени; [1]-первая папка в которой содержится неполное имя.
+</list-item><list-item dir="ltr"><bold>cd <link:url>/home**/somen</link:url></bold><link:url>*([1]:h)</link:url> # То же для файла(отрезание имени файла см. в Bash).
+</list-item><list-item dir="ltr"><bold>трюк с cd</bold>: если вы в директории
+<list><list-item dir="ltr"> <bold><link:url>~/dev/project/production/app/controllers</link:url></bold> и вам нужно в 
+</list-item><list-item dir="ltr"><bold><link:url>~/dev/project/development/app/controllers</link:url></bold><link:url>,</link:url> можно написать 
+</list-item><list-item dir="ltr"><bold>cd production development.</bold> Другими словами, с двумя параметрами cd работает как <bold>replace</bold>. </list-item></list></list-item></list>
+
+<bold><italic><highlight><link:internal>Вывод информации на экран:</link:internal></highlight></italic></bold>
+<list><list-item dir="ltr"><bold>stat</bold> #Команда “stat ” сообщает всю жизненную статистику относительно данного файла (дата создание, последнее обращение, inode и прочее).
+</list-item><list-item dir="ltr"><bold>less <italic>file</italic></bold> # просмотреть содержимое файла <italic>file</italic>
+</list-item><list-item dir="ltr"><bold>pwd</bold> # показать текущую директорию (путь)
+</list-item><list-item dir="ltr"><bold>ls</bold> # отобразить содержимое текущей директории
+</list-item><list-item dir="ltr"><bold>ls <italic>/dir</italic></bold> # отобразить содержимое директории <italic>/dir</italic>
+</list-item><list-item dir="ltr"><bold>ls -l</bold> # показать детализированное представление файлов  и директорий <bold>в</bold> текущем каталоге (тип, права доступа, владелец, и т.д.)
+</list-item><list-item dir="ltr"><bold>ls -dl</bold> # показать детализированное представление  <bold>О </bold>текущем каталоге (тип, права доступа, владелец, и т.д.)
+</list-item><list-item dir="ltr"><bold>ls -l  Ра*</bold> # покажет &quot;<bold>Ра</bold>бочий стол&quot; из домашней директории-afcd
+</list-item><list-item dir="ltr"><bold>ls -aF</bold> # отобразить содержимое текущей директории с показом скрытых объектов <size:small>(-<bold>a</bold></size:small><size:small>)</size:small> и обозначением типа объекта <size:small>(-<bold>F</bold></size:small><size:small>)</size:small>
+</list-item><list-item dir="ltr"><bold>ls -alSr | more</bold> # вывести список файлов и директорий, включая скрытые, с расширенной информацией и сортировкой по возрастанию размера
+</list-item><list-item dir="ltr"><bold>ls *[0-9]*</bold> # показать файлы и директории содержащие в имени цифры
+</list-item><list-item dir="ltr"><bold>ls -sh</bold> # отобразит размер <bold>только файлов</bold> -s и отобразит их в понятном виде -h ; ls -lh - покажет размер файлов.
+</list-item><list-item dir="ltr"><bold>ls -d */ </bold># отобразит только текущие директории. Если выводится <bold>dirname//</bold>, то <bold>\ls -d */</bold> . Вместе со скрытыми папками: <bold>„.*/ */ “</bold> .
+</list-item><list-item dir="ltr"><bold>echo */</bold> # отобразить текущие директории; <bold>echo ./*/</bold> # покажет даже папки со странными именами; вывод в строку, что удобно, когда папок много.
+<list><list-item dir="ltr">l<bold>s -1 </bold>~/ # отобразит в один столбец директории и файлы(без скрытых) в домашней папке.
+</list-item><list-item dir="ltr">l<bold>s -v -1 </bold> # отобразит в один столбец в нужном порядке по номерам файлов, номера вначале; как в файловом менеджере.
+</list-item><list-item dir="ltr"><bold>ls mb_yandexdisk/<link:internal>tomboy</link:internal></bold><bold>_synch/0/0 | wc</bold> - посчитает количество файлов в папке
+</list-item><list-item dir="ltr"><bold> ls -R | grep -E &quot;jpg|png&quot; | wc -l</bold> # рекурсивный <link:internal>поиск</link:internal> вглубь, файлов с раcширением &quot;.ды -вjpg&quot; и &quot;.png&quot;(опция &quot;|&quot; - либо-либо); и подсчёт количества найденных файлов(по сути строк-опция &quot;-l&quot;).
+</list-item><list-item dir="ltr"> <bold>ls  */*/*/* | grep -E &quot;jpg|png&quot; | wc -l</bold> # аналогично команде выше, но можно контролировать глубину погружения-четыре папки вглубь(*/*/*/*), три(*/*/*) и т.п.
+</list-item></list></list-item><list-item dir="ltr"><bold>ls -FA | grep -v &quot;/&quot; | sed -r 's/^(.+)\.[^.]+$/\1/'</bold> # показать файлы(Ф-без &quot;. и ..&quot;; F-маркировать дирректории), без расширений(sed...), в том числе скрытые файлы, исключить директории(<bold>grep -v &quot;/&quot; </bold>).
+</list-item><list-item dir="ltr"><bold>ls -t</bold> - <link:internal>поиск</link:internal> по времени <bold>модификации</bold>; <bold>ls -tr</bold> -в обратном порядке; <bold>ls -tr1</bold> -  то же в один столбец; <bold>ls -ltr1</bold> - с длинными опциями. Для выставления списка в виде -&quot;последние в конце&quot;.
+</list-item><list-item dir="ltr"><bold>ls -v</bold> # v-естественный вид (версия) чисел в тексте, выставляет и мена файлов в порядке возрастания номеров, даже без нолей; можно использовать в виде `ls -v *.jpg`.
+</list-item><list-item dir="ltr"><bold>ls -lct /etc | tail -1 | awk '{print $6,$7,$8}'</bold> # узнать, когда была установлена система.
+</list-item><list-item dir="ltr"><bold>find . -type f -mmin -5 -print0 | xargs -0 <link:url>/bin/ls</link:url></bold><bold> -1tr</bold>  # Супер!! Для выставления списка в виде -&quot;последние в конце&quot;; папки и файлы вперемешку; независимо от локали. Сортирует строго по времени.  
+</list-item><list-item dir="ltr"><bold>find . -maxdepth 0 -exec ls -1tr '{}' +</bold> # Ещё короче предыдущей команды с выводом в коротком виде:  С тем же результатом. 
+</list-item><list-item dir="ltr"><bold>find . -exec ls -ltr '{}' + </bold># То же. что и выше. Если нужно показать содержимое всех папок с итогом в конце; с длинным выходом &quot;l&quot;.</list-item></list>
+
+</note-content>
+</text><last-change-date>2022-05-27T19:09:31,894887Z</last-change-date><last-metadata-change-date>2022-05-27T19:09:31,895436Z</last-metadata-change-date><create-date>2009-11-03T09:55:20,000000Z</create-date><cursor-position>15254</cursor-position><selection-bound-position>-1</selection-bound-position><width>873</width><height>658</height><tags><tag>system:notebook:MiniHelp</tag></tags></note>
+
