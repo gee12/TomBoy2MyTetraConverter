@@ -51,7 +51,7 @@ compose.desktop {
             }
             linux {
                 iconFile.set(project.file("icon.ico"))
-                packageName = "teraboy2mytetra"
+                packageName = "tomboy2mytetra"
                 shortcut = true
             }
         }
